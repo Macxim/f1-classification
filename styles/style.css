@@ -443,17 +443,15 @@ th {
 .main-nav{
   margin: 0;
   padding: 10px 10px 6px;
-  background-color: #95939b;
+  background-color: #1D1F21;
   color: #FFF;
+  font-size: 13px;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .main-nav__item{
   display: inline-block;
-}
-
-.main-nav__item:first-child{
-  margin-right: 1rem;
 }
 
 .main-nav__button{
