@@ -1,5 +1,26 @@
 import '../styles/style.css';
 
+// Models
+
+function Driver(attributes) {
+  this.ranking = attributes.ranking
+  this.points = attributes.points
+  this.nationality = attributes.nationality
+  this.surname = attributes.surname
+  this.name = attributes.name
+  this.team = attributes.team
+  this.teamPoints = attributes.teamPoints
+  this.lastRace = attributes.lastRace
+  this.wins = attributes.wins
+  this.poles = attributes.poles
+  this.bestPosition = attributes.bestPosition
+  this.bestPositionTimes = attributes.bestPositionTimes
+}
+
+
+
+// Controllers
+
 function getJSON(path, callback) {
   const httpRequest = new XMLHttpRequest();
   httpRequest.onload = function () {
@@ -10,51 +31,58 @@ function getJSON(path, callback) {
   };
   httpRequest.open('GET', path, true)
   httpRequest.send()
-
 }
 
-(function (){
+function renderDrivers() {
+  const driversListContainer = document.getElementById('drivers-list');
+
   getJSON('data.json', function (data){
-    let drivers = data.drivers;
-    loopOverData(drivers);
+    const drivers = data
+      .drivers
+      .map(attributes => new Driver(attributes));
+
+    const driversRows = document.createDocumentFragment();
+    let view;
+
+    drivers.forEach( (driver, i) => {
+      view = document.createElement('div');
+      view.className = 'driver-row';
+      view.id = `driver-${i}`
+      view.innerHTML = DriverView(driver, i+1)
+      driversListContainer.appendChild(view)
+    })
   })
-})();
+}
+
+renderDrivers()
 
 
-function loopOverData(driversData){
-  let template;
-  let driversListContainer = document.getElementById('drivers-list');
 
-  for (let i = 0; i < driversData.length; i++){
+// Views
 
-    template =
-    `<div class="driver-row__item driver-row__item--first">
-      <span class="driver-ranking">${driversData[i].ranking}°</span>
-      <div class="driver-points-wrap"><span class="driver-points-label">Points</span><span class="driver-points">${driversData[i].points}</span></div>
-    </div>
-    <div class="driver-row__item driver-row__item--second">
-      <img class="driver-photo" src="images/drivers/.png" alt="">
-    </div>
-    <div class="driver-row__item driver-row__item--third">
-      <img class="driver-flag" src="images/flags/.jpg" alt="">
-    </div>
-    <div class="driver-details">
-      <span class="driver-nationality">${driversData[i].nationality}</span>
-      <div><span class="driver-surname">${driversData[i].surname}</span> <span class="driver-name">${driversData[i].name}</span></div>
-      <div><span class="driver-team">${driversData[i].team}</span> <span class="driver-team-points">(${driversData[i].teamPoints})</span></div>
-    </div>
-    <ul class="driver-row__item driver-races-data">
-      <li class="driver-races-data__item"><span class="races-data-label">Last GP</span><span class="race-data-figure">${driversData[i].lastRace}°</span></li>
-      <li class="driver-races-data__item"><span class="races-data-label">Victories</span><span class="race-data-figure">${driversData[i].wins}</span></li>
-      <li class="driver-races-data__item"><span class="races-data-label">Poles</span><span class="race-data-figure">${driversData[i].poles}</span></li>
-      <li class="driver-races-data__item"><span class="races-data-label">Best Position</span><span class="race-data-figure">${driversData[i].bestPosition}°</span></li>
-    </ul>`;
-
-    let newDriver = document.createElement('div');
-
-    newDriver.className = 'driver-row';
-    newDriver.innerHTML = template;
-
-    driversListContainer.appendChild(newDriver);
-  }
+function DriverView(driver, i) {
+  const view = `
+      <div class="driver-row__item driver-row__item--first">
+        <span class="driver-ranking">${driver.ranking}°</span>
+        <div class="driver-points-wrap"><span class="driver-points-label">Points</span><span class="driver-points">${driver.points}</span></div>
+      </div>
+      <div class="driver-row__item driver-row__item--second">
+        <img class="driver-photo" src="images/drivers/0${i}.png" alt="">
+      </div>
+      <div class="driver-row__item driver-row__item--third">
+        <img class="driver-flag" src="images/flags/.jpg" alt="">
+      </div>
+      <div class="driver-details">
+        <span class="driver-nationality">${driver.nationality}</span>
+        <div><span class="driver-surname">${driver.surname}</span> <span class="driver-name">${driver.name}</span></div>
+        <div><span class="driver-team">${driver.team}</span> <span class="driver-team-points">(${driver.teamPoints})</span></div>
+      </div>
+      <ul class="driver-row__item driver-races-data">
+        <li class="driver-races-data__item"><span class="races-data-label">Last GP</span><span class="race-data-figure">${driver.lastRace}°</span></li>
+        <li class="driver-races-data__item"><span class="races-data-label">Victories</span><span class="race-data-figure">${driver.wins}</span></li>
+        <li class="driver-races-data__item"><span class="races-data-label">Poles</span><span class="race-data-figure">${driver.poles}</span></li>
+        <li class="driver-races-data__item"><span class="races-data-label">Best Position</span><span class="race-data-figure">${driver.bestPosition}°</span></li>
+      </ul>
+  `
+  return view
 }
