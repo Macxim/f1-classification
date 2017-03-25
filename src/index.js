@@ -46,21 +46,35 @@ function renderDrivers() {
 
     drivers.forEach( (driver, i) => {
       view = document.createElement('div');
-      view.className = 'driver-row';
+      view.className = 'driver-row'
       view.id = `driver-${i}`
-      view.innerHTML = DriverView(driver, i+1)
+      view.innerHTML = DriverView(driver, i+1, matchFlags(driver.nationality))
       driversListContainer.appendChild(view)
     })
   })
 }
 
-renderDrivers()
+function matchFlags(nationality) {
+  const flags = {
+    "Germany": "01",
+    "Australia": "02",
+    "Brazil": "03",
+    "Spain": "04",
+    "United Kingdom": "05"
+  }
+  return flags[nationality];
+}
 
+
+renderDrivers()
 
 
 // Views
 
-function DriverView(driver, i) {
+function DriverView(driver, i, flagNumber) {
+  if (typeof driver.lastRace === 'undefined') {
+    driver.lastRace = '---'
+  }
   const view = `
       <div class="driver-row__item driver-row__item--first">
         <span class="driver-ranking">${driver.ranking}°</span>
@@ -70,7 +84,7 @@ function DriverView(driver, i) {
         <img class="driver-photo" src="images/drivers/0${i}.png" alt="">
       </div>
       <div class="driver-row__item driver-row__item--third">
-        <img class="driver-flag" src="images/flags/.jpg" alt="">
+        <img class="driver-flag" src="images/flags/${flagNumber}.jpg" alt="">
       </div>
       <div class="driver-details">
         <span class="driver-nationality">${driver.nationality}</span>
