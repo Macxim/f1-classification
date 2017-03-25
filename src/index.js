@@ -42,7 +42,14 @@ function renderDrivers() {
       .map(attributes => new Driver(attributes));
 
     const driversRows = document.createDocumentFragment();
+    const filtersButtons = document.querySelectorAll('a.main-nav__button');
     let view;
+
+    filtersButtons.forEach( (btn, i) => {
+      filtersButtons[i].addEventListener('click', (e) => {
+        sortDataByKey(drivers, filtersButtons[i].dataset.sort)
+      })
+    })
 
     drivers.forEach( (driver, i) => {
       view = document.createElement('div');
@@ -65,6 +72,9 @@ function matchFlags(nationality) {
   return flags[nationality];
 }
 
+function sortDataByKey (data, prop){
+  return data.sort( (a, b) => (a[prop] > b[prop]) )
+}
 
 renderDrivers()
 
