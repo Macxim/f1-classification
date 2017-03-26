@@ -23,7 +23,7 @@ function Driver(attributes) {
 
 function getJSON(path, callback) {
   const httpRequest = new XMLHttpRequest();
-  httpRequest.onload = function () {
+  httpRequest.onload = () => {
     if (httpRequest.status >= 200 && httpRequest.status < 400) {
       const data = JSON.parse(httpRequest.responseText);
       if (callback) { callback(data); }
@@ -34,30 +34,33 @@ function getJSON(path, callback) {
 }
 
 function renderDrivers() {
-  const driversListContainer = document.getElementById('drivers-list');
 
-  getJSON('data.json', function (data){
-    const drivers = data
+  getJSON('data.json', data => {
+    let drivers = data
       .drivers
       .map(attributes => new Driver(attributes));
 
-    const driversRows = document.createDocumentFragment();
     const filtersButtons = document.querySelectorAll('a.main-nav__button');
-    let view;
 
-    filtersButtons.forEach( (btn, i) => {
-      filtersButtons[i].addEventListener('click', (e) => {
-        sortDataByKey(drivers, filtersButtons[i].dataset.sort)
+    filtersButtons.forEach( (button, i) => {
+      filtersButtons[i].addEventListener('click', () => {
+        const driversContainer = document.getElementById('drivers-list');
+
+        drivers = sortDataByKey(drivers, filtersButtons[i].dataset.sort)
+
+        // Remove all children of container before appending sorted ones
+        while (driversContainer.hasChildNodes()) {
+          driversContainer.removeChild(driversContainer.lastChild);
+        }
+
+        // Passing the data to the view and appending content
+        passDataToView(drivers)
+
       })
     })
 
-    drivers.forEach( (driver, i) => {
-      view = document.createElement('div');
-      view.className = 'driver-row'
-      view.id = `driver-${i}`
-      view.innerHTML = DriverView(driver, i+1, matchFlags(driver.nationality))
-      driversListContainer.appendChild(view)
-    })
+    passDataToView(drivers)
+
   })
 }
 
@@ -72,6 +75,32 @@ function matchFlags(nationality) {
   return flags[nationality];
 }
 
+function matchAvatars(name) {
+  const avatar = {
+    "Vettel": "01",
+    "Button": "02",
+    "Webber": "03",
+    "Alonso": "04",
+    "Hamilton": "05",
+    "Massa": "06",
+    "Rosberg": "07",
+    "Schumacher": "08"
+  }
+  return avatar[name];
+}
+
+function passDataToView(drivers){
+  let view;
+  const driversContainer = document.getElementById('drivers-list');
+
+  drivers.forEach( (driver) => {
+    view = document.createElement('div');
+    view.className = 'driver-row'
+    view.innerHTML = DriverView(driver, matchAvatars(driver.name), matchFlags(driver.nationality))
+    driversContainer.appendChild(view)
+  })
+}
+
 function sortDataByKey (data, prop){
   return data.sort( (a, b) => (a[prop] > b[prop]) )
 }
@@ -81,7 +110,7 @@ renderDrivers()
 
 // Views
 
-function DriverView(driver, i, flagNumber) {
+function DriverView(driver, avatar, flag) {
   if (typeof driver.lastRace === 'undefined') {
     driver.lastRace = '---'
   }
@@ -91,10 +120,10 @@ function DriverView(driver, i, flagNumber) {
         <div class="driver-points-wrap"><span class="driver-points-label">Points</span><span class="driver-points">${driver.points}</span></div>
       </div>
       <div class="driver-row__item driver-row__item--second">
-        <img class="driver-photo" src="images/drivers/0${i}.png" alt="">
+        <img class="driver-photo" src="images/drivers/${avatar}.png" alt="">
       </div>
       <div class="driver-row__item driver-row__item--third">
-        <img class="driver-flag" src="images/flags/${flagNumber}.jpg" alt="">
+        <img class="driver-flag" src="images/flags/${flag}.jpg" alt="">
       </div>
       <div class="driver-details">
         <span class="driver-nationality">${driver.nationality}</span>
