@@ -502,6 +502,11 @@ th {
   animation-name: fadeInUp;
 }
 
+.driver-row.over {
+  border: 1px dashed #000;
+  background-color: rgba(183, 196, 204, 0.4);
+}
+
 .driver-row:last-child{
   border-bottom: 0;
 }

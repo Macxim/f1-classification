@@ -45,7 +45,7 @@ function renderDrivers() {
     filtersButtons.forEach( (button, i) => {
       filtersButtons[i].addEventListener('click', () => {
         const driversContainer = document.getElementById('drivers-list')
-        
+
         drivers = sortDataByKey(drivers, filtersButtons[i].dataset.sort)
 
         // Remove all children of container before appending sorted ones
@@ -55,11 +55,12 @@ function renderDrivers() {
 
         // Passing the data to the view and appending content
         passDataToView(drivers)
-
+        triggerDnD()
       })
     })
 
     passDataToView(drivers)
+    triggerDnD()
 
   })
 }
@@ -110,7 +111,73 @@ function sortDataByKey (data, prop){
   return data.sort( (a, b) => (a[prop] > b[prop]) )
 }
 
+
+function triggerDnD() {
+  setTimeout( () => {
+
+    function handleDrop(e) {
+
+      if (e.stopPropagation) {
+        e.stopPropagation()
+      }
+
+      if (dragSrcEl != this) {
+        dragSrcEl.innerHTML = this.innerHTML;
+        this.innerHTML = e.dataTransfer.getData('text/html')
+      }
+
+      return false
+    }
+
+    function handleDragEnd(e) {
+      [].forEach.call(driversRows, function (row) {
+        row.classList.remove('over')
+      });
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) {
+        e.preventDefault()
+      }
+
+      this.classList.add('over')
+      e.dataTransfer.dropEffect = 'move'
+
+      return false;
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('over')
+    }
+
+    let dragSrcEl = null
+
+    function handleDragStart(e) {
+      this.style.opacity = '0.3'
+
+      dragSrcEl = this
+
+      e.dataTransfer.effectAllowed = 'move'
+      e.dataTransfer.setData('text/html', this.innerHTML)
+    }
+
+    const driversRows = document.querySelectorAll('.driver-row');
+
+    [].forEach.call(driversRows, function(row) {
+      row.addEventListener('dragstart', handleDragStart, false)
+      row.addEventListener('dragover', handleDragOver, false)
+      row.addEventListener('dragleave', handleDragLeave, false)
+      row.addEventListener('drop', handleDrop, false)
+      row.addEventListener('dragend', handleDragEnd, false)
+    });
+
+  }, 1000)
+}
+
 renderDrivers()
+
+
+
 
 
 // Views
@@ -118,6 +185,12 @@ renderDrivers()
 function DriverView(driver, avatar, flag) {
   if (typeof driver.lastRace === 'undefined') {
     driver.lastRace = '---'
+  }
+  if (typeof driver.bestPositionTimes === 'undefined') {
+    driver.bestPositionTimes = ''
+  }
+  else {
+    driver.bestPositionTimes = ` (${driver.bestPositionTimes}x)`
   }
   const view = `
       <div class="driver-row__item driver-row__item--first">
@@ -139,7 +212,7 @@ function DriverView(driver, avatar, flag) {
         <li class="driver-races-data__item"><span class="races-data-label">Last GP</span><span class="race-data-figure">${driver.lastRace}°</span></li>
         <li class="driver-races-data__item"><span class="races-data-label">Victories</span><span class="race-data-figure">${driver.wins}</span></li>
         <li class="driver-races-data__item"><span class="races-data-label">Poles</span><span class="race-data-figure">${driver.poles}</span></li>
-        <li class="driver-races-data__item"><span class="races-data-label">Best Position</span><span class="race-data-figure">${driver.bestPosition}°</span></li>
+        <li class="driver-races-data__item"><span class="races-data-label">Best Position</span><span class="race-data-figure">${driver.bestPosition}°</span><span class="race-data-figure">${driver.bestPositionTimes}</span></li>
       </ul>
   `
   return view
