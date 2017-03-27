@@ -434,24 +434,39 @@ th {
 }
 
 .drivers-list{
-  border: 3px solid #95939b;
   border-top: 0;
   padding-left: 8px;
   padding-right: 8px;
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
 .main-nav{
+  display: flex;
   margin: 0;
-  padding: 10px 10px 6px;
+  padding: 10px 5px;
   background-color: #1D1F21;
   color: #FFF;
   font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
+  list-style-type: none;
 }
 
 .main-nav__item{
-  display: inline-block;
+  display: flex;
 }
 
 .main-nav__button{
@@ -459,9 +474,10 @@ th {
   font-size: 12px;
   background-color: #aaa8af;
   margin-right: 5px;
-  padding: 5px 10px 2px;
+  padding: 10px;
   text-decoration: none;
   color: #FFF;
+  letter-spacing: 1px;
 }
 
 .main-nav__button:hover{
@@ -477,7 +493,15 @@ th {
   width: 100%;
   padding-top: 5px;
   padding-bottom: 3px;
+  cursor: move;
 }
+
+.driver-row.is-moving-up{
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-name: fadeInUp;
+}
+
 .driver-row:last-child{
   border-bottom: 0;
 }
@@ -554,4 +578,14 @@ th {
   margin-bottom: 10px;
   font-size: 10px;
   color: #95939b;
+}
+
+[draggable=true] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
 }

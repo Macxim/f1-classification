@@ -44,8 +44,8 @@ function renderDrivers() {
 
     filtersButtons.forEach( (button, i) => {
       filtersButtons[i].addEventListener('click', () => {
-        const driversContainer = document.getElementById('drivers-list');
-
+        const driversContainer = document.getElementById('drivers-list')
+        
         drivers = sortDataByKey(drivers, filtersButtons[i].dataset.sort)
 
         // Remove all children of container before appending sorted ones
@@ -93,11 +93,16 @@ function passDataToView(drivers){
   let view;
   const driversContainer = document.getElementById('drivers-list');
 
-  drivers.forEach( (driver) => {
-    view = document.createElement('div');
-    view.className = 'driver-row'
-    view.innerHTML = DriverView(driver, matchAvatars(driver.name), matchFlags(driver.nationality))
-    driversContainer.appendChild(view)
+  drivers.forEach( (driver, i) => {
+    setTimeout( () => {
+      view = document.createElement('div')
+      view.className = 'driver-row'
+      view.setAttribute('draggable', 'true')
+      view.innerHTML = DriverView(driver, matchAvatars(driver.name), matchFlags(driver.nationality))
+      driversContainer.appendChild(view)
+      view.classList.add('is-moving-up')
+    }, 80 * i);
+
   })
 }
 
