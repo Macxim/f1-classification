@@ -55,53 +55,53 @@ function renderDrivers() {
 
         // Passing the data to the view and appending content
         passDataToView(drivers)
-        triggerDnD()
       })
     })
 
     passDataToView(drivers)
-    triggerDnD()
 
   })
 }
 
-function matchFlags(nationality) {
-  const flags = {
-    "Germany": "01",
-    "Australia": "02",
-    "Brazil": "03",
-    "Spain": "04",
-    "United Kingdom": "05"
-  }
-  return flags[nationality];
-}
-
-function matchAvatars(name) {
-  const avatar = {
-    "Vettel": "01",
-    "Button": "02",
-    "Webber": "03",
-    "Alonso": "04",
-    "Hamilton": "05",
-    "Massa": "06",
-    "Rosberg": "07",
-    "Schumacher": "08"
-  }
-  return avatar[name];
-}
 
 function passDataToView(drivers){
   let view;
   const driversContainer = document.getElementById('drivers-list');
+
+  const FLAGS = {
+      "Germany": "01",
+      "Australia": "02",
+      "Brazil": "03",
+      "Spain": "04",
+      "United Kingdom": "05"
+  }
+
+  const AVATARS = {
+      "Vettel": "01",
+      "Button": "02",
+      "Webber": "03",
+      "Alonso": "04",
+      "Hamilton": "05",
+      "Massa": "06",
+      "Rosberg": "07",
+      "Schumacher": "08"
+  }
 
   drivers.forEach( (driver, i) => {
     setTimeout( () => {
       view = document.createElement('div')
       view.className = 'driver-row'
       view.setAttribute('draggable', 'true')
-      view.innerHTML = DriverView(driver, matchAvatars(driver.name), matchFlags(driver.nationality))
+      view.innerHTML = DriverView(driver, AVATARS[driver.name], FLAGS[driver.nationality])
       driversContainer.appendChild(view)
       view.classList.add('is-moving-up')
+
+      view.addEventListener('dragstart', handleDragStart, false)
+      view.addEventListener('dragover', handleDragOver, false)
+      view.addEventListener('dragleave', handleDragLeave, false)
+      view.addEventListener('drop', handleDrop, false)
+      view.addEventListener('dragend', handleDragEnd, false)
+
     }, 80 * i);
 
   })
@@ -111,71 +111,55 @@ function sortDataByKey (data, prop){
   return data.sort( (a, b) => (a[prop] > b[prop]) )
 }
 
+function handleDrop(e) {
 
-function triggerDnD() {
-  setTimeout( () => {
+  if (e.stopPropagation) {
+    e.stopPropagation()
+  }
 
-    function handleDrop(e) {
+  if (dragSrcEl != this) {
+    dragSrcEl.innerHTML = this.innerHTML;
+    this.innerHTML = e.dataTransfer.getData('text/html')
+  }
 
-      if (e.stopPropagation) {
-        e.stopPropagation()
-      }
-
-      if (dragSrcEl != this) {
-        dragSrcEl.innerHTML = this.innerHTML;
-        this.innerHTML = e.dataTransfer.getData('text/html')
-      }
-
-      return false
-    }
-
-    function handleDragEnd(e) {
-      [].forEach.call(driversRows, function (row) {
-        row.classList.remove('over')
-      });
-    }
-
-    function handleDragOver(e) {
-      if (e.preventDefault) {
-        e.preventDefault()
-      }
-
-      this.classList.add('over')
-      e.dataTransfer.dropEffect = 'move'
-
-      return false;
-    }
-
-    function handleDragLeave(e) {
-      this.classList.remove('over')
-    }
-
-    let dragSrcEl = null
-
-    function handleDragStart(e) {
-      this.style.opacity = '0.3'
-
-      dragSrcEl = this
-
-      e.dataTransfer.effectAllowed = 'move'
-      e.dataTransfer.setData('text/html', this.innerHTML)
-    }
-
-    const driversRows = document.querySelectorAll('.driver-row');
-
-    [].forEach.call(driversRows, function(row) {
-      row.addEventListener('dragstart', handleDragStart, false)
-      row.addEventListener('dragover', handleDragOver, false)
-      row.addEventListener('dragleave', handleDragLeave, false)
-      row.addEventListener('drop', handleDrop, false)
-      row.addEventListener('dragend', handleDragEnd, false)
-    });
-
-  }, 1000)
+  return false
 }
 
-renderDrivers()
+function handleDragEnd(e) {
+  document.querySelectorAll('.driver-row').forEach( row => {
+    row.classList.remove('over')
+  });
+}
 
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault()
+  }
+
+  this.classList.add('over')
+  e.dataTransfer.dropEffect = 'move'
+
+  return false;
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('over')
+}
+
+let dragSrcEl = null
+
+function handleDragStart(e) {
+  this.style.opacity = '0.3'
+
+  dragSrcEl = this
+
+  e.dataTransfer.effectAllowed = 'move'
+  e.dataTransfer.setData('text/html', this.innerHTML)
+}
+
+
+
+renderDrivers()
 
 
 
@@ -183,15 +167,6 @@ renderDrivers()
 // Views
 
 function DriverView(driver, avatar, flag) {
-  if (typeof driver.lastRace === 'undefined') {
-    driver.lastRace = '---'
-  }
-  if (typeof driver.bestPositionTimes === 'undefined') {
-    driver.bestPositionTimes = ''
-  }
-  else {
-    driver.bestPositionTimes = ` (${driver.bestPositionTimes}x)`
-  }
   const view = `
       <div class="driver-row__item driver-row__item--first">
         <span class="driver-ranking">${driver.ranking}°</span>
