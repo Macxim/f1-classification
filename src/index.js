@@ -15,6 +15,18 @@ function Driver(attributes) {
   this.poles = attributes.poles
   this.bestPosition = attributes.bestPosition
   this.bestPositionTimes = attributes.bestPositionTimes
+
+  this.checkUndefinedValues = function () {
+    if (typeof this.lastRace === 'undefined') {
+      this.lastRace = '---'
+    }
+    if (typeof this.bestPositionTimes === 'undefined') {
+      this.bestPositionTimes = ''
+    }
+    else {
+      this.bestPositionTimes = ` (${this.bestPositionTimes}x)`
+    }
+  }
 }
 
 
@@ -167,6 +179,7 @@ renderDrivers()
 // Views
 
 function DriverView(driver, avatar, flag) {
+  driver.checkUndefinedValues()
   const view = `
       <div class="driver-row__item driver-row__item--first">
         <span class="driver-ranking">${driver.ranking}°</span>
