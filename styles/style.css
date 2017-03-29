@@ -422,21 +422,40 @@ td,
 th {
   padding: 0;
 }
-.visuallyhidden{
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+
+
+ @import url('https://fonts.googleapis.com/css?family=Muli');
+
+ body{
+   font-family: 'Avenir Next','Muli', Georgia, sans-serif;
+   background-color: #F3F3F3;
+   padding-bottom: 1em;
+ }
+
+.container{
+  max-width: 70%;
+  margin: 1.5em auto;
+  background: #FFFFFF;
+  box-shadow: 10px 28px 29px 0 rgba(0,0,0,0.13);
+  border-radius: 2px;
+}
+
+.header{
+  background-image: linear-gradient(135deg, #FFBD3A 0%, #FF9494 100%);
+}
+
+.header__title{
+  margin: 0;
+  text-align: center;
+  padding: 40px 0 20px;
+  color: #fff;
+  font-size: 24px;
+  text-transform: uppercase;
 }
 
 .drivers-list{
   border-top: 0;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 35px 40px;
 }
 
 @keyframes fadeInUp {
@@ -453,11 +472,14 @@ th {
   }
 }
 
+.nav{
+  text-align: center;
+}
+
 .main-nav{
-  display: flex;
+  display: inline-flex;
   margin: 0;
-  padding: 10px 5px;
-  background-color: #1D1F21;
+  padding: 0;
   color: #FFF;
   font-size: 13px;
   font-weight: bold;
@@ -472,27 +494,25 @@ th {
 .main-nav__button{
   text-transform: uppercase;
   font-size: 12px;
-  background-color: #aaa8af;
+  font-weight: 500;
   margin-right: 5px;
   padding: 10px;
   text-decoration: none;
   color: #FFF;
-  letter-spacing: 1px;
+  border-radius: 4px;
 }
 
 .main-nav__button:hover{
-  background-color: rgb(119, 118, 124);
+  background-color: rgba(0,0,0, .15);
 }
 
 .main-nav__button--active{
-  background-color: #6a6871;
+  background-color: rgba(0,0,0, .1);
 }
 .driver-row{
-  border-bottom: 1px solid #aaa8af;
   display: table;
   width: 100%;
-  padding-top: 5px;
-  padding-bottom: 3px;
+  margin-bottom: 15px;
   cursor: move;
 }
 
@@ -503,8 +523,8 @@ th {
 }
 
 .driver-row.over {
-  border: 1px dashed #000;
-  background-color: rgba(183, 196, 204, 0.4);
+  border: 1px dashed rgba(0, 0, 0, .6);
+  background-color: rgba(0, 0, 0, .03);
 }
 
 .driver-row:last-child{
@@ -520,69 +540,92 @@ th {
 }
 .driver-row__item--second{
   width: 67px;
+  padding-right: 18px;
 }
 .driver-row__item--third{
-  width: 30px;
+  width: 20px;
+  padding-right: 10px;
 }
 .driver-ranking{
+  text-align: center;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
   font-weight: bold;
-  font-size: 26px;
-  color: #6a6871;
+  font-style: italic;
+  font-size: 28px;
+  color: #000;
   display: block;
+  width: 54px;
+  height: 54px;
+  position: absolute;
+  left: -65px;
+  background-color: #fff;
+  line-height: 54px;
 }
 .driver-points-wrap{
-  text-align: right;
-  margin-top: -5px;
-  margin-right: 5px;
+  margin: 5px;
 }
 .driver-points-label, .driver-points{
   display: block;
-  text-align: right;
-  color: #95939b;
-  font-weight: bold;
+  text-align: left;
+  color: rgba(0, 0, 0, .6);
 }
 .driver-points-label{
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, .3);
 }
 .driver-points{
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.driver-photo{
+  border-radius: 4px;
+}
+.driver-details{
+  margin-left: -30px;
 }
 .driver-nationality{
-  color: #6a6871;
+  display: inherit;
+  font-weight: bold;
+  font-style: italic;
   font-size: 12px;
+  color: rgba(0, 0, 0, .5);
+  text-transform: uppercase;
 }
 .driver-surname, .driver-name{
-  font-size: 16px;
-  color: #6a6871;
+  font-size: 18px;
 }
 .driver-team, .driver-team-points{
-  color: #9e9ca4;
-  font-size: 13px;
+  font-size: 14px;
 }
 .driver-races-data{
   list-style-type: none;
   text-align: right;
   margin: 0;
   padding: 0;
-  font-weight: bold;
+  font-weight: 500;
 }
 .driver-races-data__item{
+  border-left: 2px solid rgba(151, 151, 151, .12);
   display: inline-block;
-  background: #edeeeb;
-  padding: 10px 15px 5px;
+  padding: 10px 20px 5px;
   margin-right: 1px;
-  border-radius: 2px;
-  text-align: center;
-  color: #6a6871;
+  text-align: left;
+  color: rgba(0, 0, 0, .6);
+  font-size: 18px;
 }
 .races-data-label{
   display: block;
-  color: ;
   text-transform: uppercase;
   margin-bottom: 10px;
-  font-size: 10px;
-  color: #95939b;
+  font-size: 11px;
+  color: rgba(0, 0, 0, .3);
+}
+
+.race-data-figure--tiny{
+  font-size: 11px;
 }
 
 [draggable=true] {
@@ -593,4 +636,16 @@ th {
   /* Required to make elements draggable in old WebKit */
   -khtml-user-drag: element;
   -webkit-user-drag: element;
+}
+
+footer{
+  text-align: center;
+  font-weight: 300;
+
+}
+
+footer a{
+  text-decoration: none;
+  font-weight: normal;
+  color: inherit;
 }
