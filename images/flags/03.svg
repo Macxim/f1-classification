@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="15px" viewBox="0 0 20 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>BR</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="20" height="14.2857143" rx="2"></rect>
+        <ellipse id="path-3" cx="3.33333333" cy="3.33333333" rx="3.33333333" ry="3.33333333"></ellipse>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Exercice" transform="translate(-296.000000, -591.000000)">
+            <g id="Group-2" transform="translate(83.000000, 67.000000)">
+                <g id="06" transform="translate(0.000000, 523.000000)">
+                    <g id="Group" transform="translate(129.000000, 0.000000)">
+                        <g id="BR" transform="translate(84.000000, 1.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+                            <rect id="Mask-Copy" fill="#05AB41" mask="url(#mask-2)" x="0" y="0" width="20" height="14.2857143"></rect>
+                            <path d="M2.4611804,7.50289264 C2.15387895,7.30405053 2.15591323,6.98034746 2.4611804,6.78282164 L9.4435815,2.2647974 C9.75088295,2.06595529 10.2511513,2.06727158 10.5564185,2.2647974 L17.5388196,6.78282164 C17.846121,6.98166376 17.8440868,7.30536682 17.5388196,7.50289264 L10.5564185,12.0209169 C10.249117,12.219759 9.74884868,12.2184427 9.4435815,12.0209169 L2.4611804,7.50289264 Z" id="Rectangle-60" fill="#FDD216" mask="url(#mask-2)"></path>
+                            <g id="Oval-2" mask="url(#mask-2)">
+                                <g transform="translate(6.666667, 3.809524)">
+                                    <mask id="mask-4" fill="white">
+                                        <use xlink:href="#path-3"></use>
+                                    </mask>
+                                    <use id="Mask" stroke="none" fill="#053087" fill-rule="evenodd" xlink:href="#path-3"></use>
+                                    <path d="M-0.476190476,2.85714286 C2.74225087e-14,2.3809524 1.72154018,2.60370168 3.33333333,2.85714286 C4.94512649,3.11058405 6.67246825,3.81532547 7.14285714,4.28571429" id="Line" stroke="#FFFFFF" stroke-width="1.33333333" stroke-linecap="square" fill="none" mask="url(#mask-4)" transform="translate(3.333333, 3.431570) rotate(6.000000) translate(-3.333333, -3.431570) "></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
