@@ -15,18 +15,6 @@ function Driver(attributes) {
   this.poles = attributes.poles
   this.bestPosition = attributes.bestPosition
   this.bestPositionTimes = attributes.bestPositionTimes
-
-  this.checkUndefinedValues = function () {
-    if (typeof this.lastRace === 'undefined') {
-      this.lastRace = '---'
-    }
-    if (typeof this.bestPositionTimes === 'undefined') {
-      this.bestPositionTimes = ''
-    }
-    else {
-      this.bestPositionTimes = ` (${this.bestPositionTimes}x)`
-    }
-  }
 }
 
 
@@ -105,7 +93,7 @@ function passDataToView(drivers){
   }
 
   drivers.forEach( (driver, i) => {
-    driver.checkUndefinedValues()
+    //driver.checkUndefinedValues()
     setTimeout( () => {
       view = document.createElement('div')
       view.className = 'driver-row'
@@ -185,7 +173,6 @@ renderDrivers()
 // Views
 
 function DriverView(driver, avatar, flag) {
-
   const view = `
       <div class="driver-row__item driver-row__item--first">
         <span class="driver-ranking">${driver.ranking}</span>
@@ -203,10 +190,10 @@ function DriverView(driver, avatar, flag) {
         <div><span class="driver-team">${driver.team}</span> <span class="driver-team-points">(${driver.teamPoints})</span></div>
       </div>
       <ul class="driver-row__item driver-races-data">
-        <li class="driver-races-data__item"><span class="race-data-figure">${driver.lastRace}°</span><span class="races-data-label">Last GP</span></li>
+        <li class="driver-races-data__item"><span class="race-data-figure">${driver.lastRace ? driver.lastRace + "°" : "n/a"}</span><span class="races-data-label">Last GP</span></li>
         <li class="driver-races-data__item"><span class="race-data-figure">${driver.wins}</span><span class="races-data-label">Victories</span></li>
         <li class="driver-races-data__item"><span class="race-data-figure">${driver.poles}</span><span class="races-data-label">Poles</span></li>
-        <li class="driver-races-data__item"><span class="race-data-figure">${driver.bestPosition}°</span><span class="race-data-figure race-data-figure--tiny">${driver.bestPositionTimes}</span><span class="races-data-label">Best Position</span></li>
+        <li class="driver-races-data__item"><span class="race-data-figure">${driver.bestPosition}°</span><span class="race-data-figure race-data-figure--tiny">${driver.bestPositionTimes ? "(" + driver.bestPositionTimes + "x)" : ""}</span><span class="races-data-label">Best Position</span></li>
       </ul>
   `
   return view
