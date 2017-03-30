@@ -1,3 +1,4 @@
+require('file-loader?name=[name].[ext]!../index.html');
 import '../styles/style.css';
 
 // Models
