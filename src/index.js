@@ -1,5 +1,4 @@
-require('file-loader?name=[name].[ext]!../index.html');
-import '../styles/style.css';
+import './style.css';
 
 // Models
 

@@ -1,18 +1,19 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
       {
-        use: 'babel-loader',
-        test: /\.js$/
+        test: /\.js$/,
+        use: 'babel-loader'
       },
       {
         test: /\.css$/,
@@ -24,7 +25,14 @@ const config = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.css'),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    }),
+    new CopyWebpackPlugin([
+      {from: 'src/data.json'},
+      {from: 'src/images', to: 'images'}
+    ])
   ]
 };
 
