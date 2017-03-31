@@ -7,11 +7,17 @@
  }
 
 .container{
-  max-width: 70%;
+  max-width: 95%;
   margin: 1.5em auto;
   background: #FFFFFF;
   box-shadow: 10px 28px 29px 0 rgba(0,0,0,0.13);
   border-radius: 2px;
+}
+
+@media screen and (min-width: 1200px) {
+  .container{
+    max-width: 70%;
+  }
 }
 
 .header{
@@ -23,14 +29,28 @@
   text-align: center;
   padding: 40px 0 20px;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   text-transform: uppercase;
+}
+
+@media screen and (min-width: 600px) {
+  .header__title{
+    font-size: 24px;
+  }
 }
 
 .drivers-list{
   border-top: 0;
-  padding: 35px 40px;
+  padding: 20px 15px;
+
 }
+
+@media screen and (min-width: 600px) {
+ .drivers-list{
+   padding: 35px 40px;
+ }
+}
+
 
 @keyframes fadeInUp {
   from {
@@ -83,11 +103,19 @@
 .main-nav__button--active{
   background-color: rgba(0,0,0, .1);
 }
+
 .driver-row{
-  display: table;
-  width: 100%;
   margin-bottom: 15px;
   cursor: move;
+  display: grid;
+  grid-template-columns: 80px 95px 90px;
+}
+
+@media screen and (min-width: 400px) {
+  .driver-row{
+    display: table;
+    width: 100%;
+  }
 }
 
 .driver-row.is-moving-up{
@@ -132,10 +160,19 @@
   width: 54px;
   height: 54px;
   position: absolute;
-  left: -65px;
+  left: -25px;
+  top: 85px;
   background-color: #fff;
   line-height: 54px;
 }
+
+@media screen and (min-width: 500px) {
+  .driver-ranking{
+    left: -65px;
+    top: auto;
+  }
+}
+
 .driver-points-wrap{
   margin: 5px;
 }
@@ -157,39 +194,84 @@
 .driver-photo{
   border-radius: 4px;
 }
-.driver-details{
-  margin-left: -30px;
+
+.driver-flag{
+  width: 35px;
 }
+
+@media screen and (min-width: 500px) {
+  .driver-flag{
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .driver-details{
+    margin-left: -30px;
+  }
+}
+
 .driver-nationality{
   display: inherit;
   font-weight: bold;
   font-style: italic;
-  font-size: 12px;
+  font-size: 10px;
   color: rgba(0, 0, 0, .5);
   text-transform: uppercase;
 }
+
+@media screen and (min-width: 600px) {
+  .driver-nationality{
+    font-size: 12px;
+  }
+}
+
 .driver-surname, .driver-name{
-  font-size: 18px;
+  font-size: 15px;
 }
+
 .driver-team, .driver-team-points{
-  font-size: 14px;
+  font-size: 12px;
 }
+
+@media screen and (min-width: 855px) {
+  .driver-surname, .driver-name{
+    font-size: 18px;
+  }
+  .driver-team, .driver-team-points{
+    font-size: 14px;
+  }
+}
+
+
 .driver-races-data{
   list-style-type: none;
-  text-align: right;
   margin: 0;
   padding: 0;
   font-weight: 500;
 }
+
 .driver-races-data__item{
-  border-left: 2px solid rgba(151, 151, 151, .12);
   display: inline-block;
-  padding: 10px 20px 5px;
+  padding: 0px 20px 0px;
   margin-right: 1px;
   text-align: left;
   color: rgba(0, 0, 0, .6);
   font-size: 18px;
 }
+
+@media screen and (min-width: 600px) {
+  .driver-races-data{
+    text-align: right;
+  }
+
+  .driver-races-data__item{
+    border-left: 2px solid rgba(151, 151, 151, .12);
+    padding: 10px 20px 5px;
+  }
+}
+
+
 .races-data-label{
   display: block;
   text-transform: uppercase;
