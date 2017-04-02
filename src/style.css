@@ -105,6 +105,7 @@
 }
 
 .driver-row{
+  position: relative;
   margin-bottom: 15px;
   cursor: move;
   display: grid;
